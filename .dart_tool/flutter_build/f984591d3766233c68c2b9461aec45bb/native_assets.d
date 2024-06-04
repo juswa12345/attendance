@@ -1,0 +1,1 @@
+ D:\\Flutter\ project\\attendance\\attendance\\.dart_tool\\flutter_build\\f984591d3766233c68c2b9461aec45bb\\native_assets.yaml: 

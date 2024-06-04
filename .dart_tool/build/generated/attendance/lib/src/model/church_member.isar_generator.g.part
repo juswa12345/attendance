@@ -1,0 +1,1273 @@
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetChurchMemberCollection on Isar {
+  IsarCollection<ChurchMember> get churchMembers => this.collection();
+}
+
+const ChurchMemberSchema = CollectionSchema(
+  name: r'ChurchMember',
+  id: 6765535465274430582,
+  properties: {
+    r'address': PropertySchema(
+      id: 0,
+      name: r'address',
+      type: IsarType.string,
+    ),
+    r'birthday': PropertySchema(
+      id: 1,
+      name: r'birthday',
+      type: IsarType.dateTime,
+    ),
+    r'contactNumber': PropertySchema(
+      id: 2,
+      name: r'contactNumber',
+      type: IsarType.string,
+    ),
+    r'department': PropertySchema(
+      id: 3,
+      name: r'department',
+      type: IsarType.string,
+    ),
+    r'email': PropertySchema(
+      id: 4,
+      name: r'email',
+      type: IsarType.string,
+    ),
+    r'fullName': PropertySchema(
+      id: 5,
+      name: r'fullName',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _churchMemberEstimateSize,
+  serialize: _churchMemberSerialize,
+  deserialize: _churchMemberDeserialize,
+  deserializeProp: _churchMemberDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
+  getId: _churchMemberGetId,
+  getLinks: _churchMemberGetLinks,
+  attach: _churchMemberAttach,
+  version: '3.1.0+1',
+);
+
+int _churchMemberEstimateSize(
+  ChurchMember object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.address.length * 3;
+  bytesCount += 3 + object.contactNumber.length * 3;
+  bytesCount += 3 + object.department.length * 3;
+  bytesCount += 3 + object.email.length * 3;
+  bytesCount += 3 + object.fullName.length * 3;
+  return bytesCount;
+}
+
+void _churchMemberSerialize(
+  ChurchMember object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.address);
+  writer.writeDateTime(offsets[1], object.birthday);
+  writer.writeString(offsets[2], object.contactNumber);
+  writer.writeString(offsets[3], object.department);
+  writer.writeString(offsets[4], object.email);
+  writer.writeString(offsets[5], object.fullName);
+}
+
+ChurchMember _churchMemberDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = ChurchMember(
+    reader.readString(offsets[5]),
+    reader.readDateTime(offsets[1]),
+    reader.readString(offsets[3]),
+    reader.readString(offsets[0]),
+    reader.readString(offsets[2]),
+    reader.readString(offsets[4]),
+  );
+  object.id = id;
+  return object;
+}
+
+P _churchMemberDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readDateTime(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readString(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+Id _churchMemberGetId(ChurchMember object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _churchMemberGetLinks(ChurchMember object) {
+  return [];
+}
+
+void _churchMemberAttach(
+    IsarCollection<dynamic> col, Id id, ChurchMember object) {
+  object.id = id;
+}
+
+extension ChurchMemberQueryWhereSort
+    on QueryBuilder<ChurchMember, ChurchMember, QWhere> {
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension ChurchMemberQueryWhere
+    on QueryBuilder<ChurchMember, ChurchMember, QWhereClause> {
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhereClause> idNotEqualTo(
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhereClause> idGreaterThan(
+      Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension ChurchMemberQueryFilter
+    on QueryBuilder<ChurchMember, ChurchMember, QFilterCondition> {
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'address',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'address',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'address',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'address',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      addressIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'address',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'birthday',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'birthday',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'birthday',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'birthday',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'contactNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'contactNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'contactNumber',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'contactNumber',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      contactNumberIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'contactNumber',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'department',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'department',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'department',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'department',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      departmentIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'department',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      emailGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'email',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      emailStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> emailMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'email',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      emailIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'email',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      emailIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'email',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fullName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'fullName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'fullName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fullName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      fullNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'fullName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> idEqualTo(
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension ChurchMemberQueryObject
+    on QueryBuilder<ChurchMember, ChurchMember, QFilterCondition> {}
+
+extension ChurchMemberQueryLinks
+    on QueryBuilder<ChurchMember, ChurchMember, QFilterCondition> {}
+
+extension ChurchMemberQuerySortBy
+    on QueryBuilder<ChurchMember, ChurchMember, QSortBy> {
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByAddress() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'address', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByAddressDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'address', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByBirthday() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'birthday', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByBirthdayDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'birthday', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByContactNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'contactNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy>
+      sortByContactNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'contactNumber', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByDepartment() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'department', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy>
+      sortByDepartmentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'department', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByEmail() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByEmailDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByFullName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fullName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> sortByFullNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fullName', Sort.desc);
+    });
+  }
+}
+
+extension ChurchMemberQuerySortThenBy
+    on QueryBuilder<ChurchMember, ChurchMember, QSortThenBy> {
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByAddress() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'address', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByAddressDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'address', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByBirthday() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'birthday', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByBirthdayDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'birthday', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByContactNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'contactNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy>
+      thenByContactNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'contactNumber', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByDepartment() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'department', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy>
+      thenByDepartmentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'department', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByEmail() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByEmailDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByFullName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fullName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByFullNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fullName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+}
+
+extension ChurchMemberQueryWhereDistinct
+    on QueryBuilder<ChurchMember, ChurchMember, QDistinct> {
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByAddress(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'address', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByBirthday() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'birthday');
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByContactNumber(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'contactNumber',
+          caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByDepartment(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'department', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByEmail(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'email', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByFullName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'fullName', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension ChurchMemberQueryProperty
+    on QueryBuilder<ChurchMember, ChurchMember, QQueryProperty> {
+  QueryBuilder<ChurchMember, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<ChurchMember, String, QQueryOperations> addressProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'address');
+    });
+  }
+
+  QueryBuilder<ChurchMember, DateTime, QQueryOperations> birthdayProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'birthday');
+    });
+  }
+
+  QueryBuilder<ChurchMember, String, QQueryOperations> contactNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'contactNumber');
+    });
+  }
+
+  QueryBuilder<ChurchMember, String, QQueryOperations> departmentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'department');
+    });
+  }
+
+  QueryBuilder<ChurchMember, String, QQueryOperations> emailProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'email');
+    });
+  }
+
+  QueryBuilder<ChurchMember, String, QQueryOperations> fullNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'fullName');
+    });
+  }
+}
