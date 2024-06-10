@@ -16,7 +16,7 @@ class ChurchMemberModel {
 
   String fullName;
 
-  DateTime birthday;
+  String birthday;
 
   String department;
 

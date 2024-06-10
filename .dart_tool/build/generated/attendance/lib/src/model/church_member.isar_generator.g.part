@@ -21,7 +21,7 @@ const ChurchMemberSchema = CollectionSchema(
     r'birthday': PropertySchema(
       id: 1,
       name: r'birthday',
-      type: IsarType.dateTime,
+      type: IsarType.string,
     ),
     r'contactNumber': PropertySchema(
       id: 2,
@@ -65,6 +65,7 @@ int _churchMemberEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.address.length * 3;
+  bytesCount += 3 + object.birthday.length * 3;
   bytesCount += 3 + object.contactNumber.length * 3;
   bytesCount += 3 + object.department.length * 3;
   bytesCount += 3 + object.email.length * 3;
@@ -79,7 +80,7 @@ void _churchMemberSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.address);
-  writer.writeDateTime(offsets[1], object.birthday);
+  writer.writeString(offsets[1], object.birthday);
   writer.writeString(offsets[2], object.contactNumber);
   writer.writeString(offsets[3], object.department);
   writer.writeString(offsets[4], object.email);
@@ -94,7 +95,7 @@ ChurchMember _churchMemberDeserialize(
 ) {
   final object = ChurchMember(
     reader.readString(offsets[5]),
-    reader.readDateTime(offsets[1]),
+    reader.readString(offsets[1]),
     reader.readString(offsets[3]),
     reader.readString(offsets[0]),
     reader.readString(offsets[2]),
@@ -114,7 +115,7 @@ P _churchMemberDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
@@ -359,49 +360,58 @@ extension ChurchMemberQueryFilter
   }
 
   QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
-      birthdayEqualTo(DateTime value) {
+      birthdayEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'birthday',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
       birthdayGreaterThan(
-    DateTime value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'birthday',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
       birthdayLessThan(
-    DateTime value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'birthday',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
       birthdayBetween(
-    DateTime lower,
-    DateTime upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -410,6 +420,77 @@ extension ChurchMemberQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'birthday',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'birthday',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'birthday',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'birthday',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'birthday',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChurchMember, ChurchMember, QAfterFilterCondition>
+      birthdayIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'birthday',
+        value: '',
       ));
     });
   }
@@ -1191,9 +1272,10 @@ extension ChurchMemberQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByBirthday() {
+  QueryBuilder<ChurchMember, ChurchMember, QDistinct> distinctByBirthday(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'birthday');
+      return query.addDistinctBy(r'birthday', caseSensitive: caseSensitive);
     });
   }
 
@@ -1241,7 +1323,7 @@ extension ChurchMemberQueryProperty
     });
   }
 
-  QueryBuilder<ChurchMember, DateTime, QQueryOperations> birthdayProperty() {
+  QueryBuilder<ChurchMember, String, QQueryOperations> birthdayProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'birthday');
     });
