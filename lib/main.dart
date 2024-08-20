@@ -1,32 +1,24 @@
 import 'dart:io';
 
+import 'package:attendance/src/attendance_app.dart';
 import 'package:flutter/material.dart';
-import 'package:attendance/actions/actions.dart';
-import 'package:attendance/utils/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 
 late final Directory appDocumentsDirectory;
 late final ProviderContainer providerContainer;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ChurchAttendance.initializeDatabase();
 
-  runApp(const Main());
-}
+  appDocumentsDirectory = await getApplicationDocumentsDirectory();
 
-class Main extends StatelessWidget {
-  const Main({super.key});
+  providerContainer = ProviderContainer();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'ATTENDANCE SCANNER',
-      themeMode: ThemeMode.system,
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      routeInformationProvider: router.routeInformationProvider,
-    );
-  }
+  runApp(
+    UncontrolledProviderScope(
+      container: providerContainer,
+      child: const AttendanceApp(),
+    ),
+  );
 }
