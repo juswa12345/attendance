@@ -25,8 +25,6 @@ class _TextFieldsState extends State<TextFields> {
     super.initState();
   }
 
-  void getInput(String value) => widget.onChanged(value);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,7 +34,7 @@ class _TextFieldsState extends State<TextFields> {
       ),
       child: TextField(
         controller: controller,
-        onChanged: getInput,
+        onChanged: widget.onChanged,
         keyboardType: widget.textInputType,
         decoration: InputDecoration(
           labelText: widget.label,

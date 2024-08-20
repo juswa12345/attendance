@@ -34,10 +34,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       ),
       child: DropdownButton<Department>(
         value: department,
-        style: const TextStyle(
-          fontSize: 20.0,
-          color: Colors.black,
-        ),
+        style: const TextStyle(fontSize: 20.0),
         underline: Container(
           height: 2,
           color: Colors.blueGrey,

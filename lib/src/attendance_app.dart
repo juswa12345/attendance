@@ -7,6 +7,7 @@ class AttendanceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       title: 'ATTENDANCE SCANNER',
       themeMode: ThemeMode.dark,

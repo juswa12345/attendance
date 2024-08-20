@@ -1,4 +1,5 @@
 import 'package:attendance/src/features/members_page/members_page.dart';
+import 'package:attendance/src/utils/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:attendance/src/features/scanner/qr_scanner.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +25,14 @@ class Homepage extends StatelessWidget {
           )
         ],
       ),
-      body: const Center(child: QrScannerPage()),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Assets.images.ngckLogo.image(width: 300),
+          const SizedBox(height: 100),
+          const Center(child: QrScannerPage()),
+        ],
+      ),
     );
   }
 }
